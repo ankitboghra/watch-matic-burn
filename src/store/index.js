@@ -40,8 +40,7 @@ export default new Vuex.Store({
     async getPolygonBlockData({ commit }) {
 
       const response = await fetchPolygonBlockData();
-      console.log("🚀 ~ file: index.js ~ line 43 ~ getPolygonBlockData ~ response", response)
-      const result = response.result;
+      const result = response.data.result;
 
       commit('SET_BLOCK_DATA', [result])
     },
