@@ -1,34 +1,36 @@
 <template>
   <div class="home">
     <Transactions :transactionsList="polygonBurnTxs" />
-    <Transactions :transactionsList="ethereumBurnTxs" />
+    <BlockList :blockList="polygonBlockData" />
   </div>
 </template>
 
 <script>
 // import Vue from "vue";
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 import Transactions from "@/components/Transactions";
+import BlockList from "@/components/BlockList";
 
 export default {
   name: "Home",
   components: {
     Transactions,
+    BlockList,
   },
   data() {
     return {};
   },
   mounted() {
-    this.$store.dispatch("fetchPolygonContractData");
-    this.$store.dispatch("getEthereumContractData");
+    // this.$store.dispatch("fetchPolygonContractData");
+    // this.$store.dispatch("getEthereumContractData");
+    this.$store.dispatch("getPolygonBlockData");
   },
   methods: {},
   computed: {
-    // ...mapState({
-    //   polygonBurnData: "polygonContractData",
-    //   ethContractData: "ethContractData",
-    // }),
+    ...mapState({
+      polygonBlockData: "polygonBlockData",
+    }),
     ...mapGetters({
       polygonBurnTxs: "polygonBurnTxs",
       ethereumBurnTxs: "ethereumBurnTxs",
