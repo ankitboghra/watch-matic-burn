@@ -1,16 +1,30 @@
 import config from './config'
 import axios from 'axios'
 
-export const fetchPolygonBlockData = () => {
+export const fetchPolygonBlockData = (blockNoHex = 'latest') => {
     const url = `${config.apis.alchemyApiBaseUrl}/${config.alchemyApiKey}`
 
     const data = JSON.stringify({
         "jsonrpc": "2.0",
         "method": "eth_getBlockByNumber",
         "params": [
-            'latest',
+            blockNoHex,
             true
         ],
+        "id": 0
+    })
+
+
+    return axios.post(url, data)
+}
+
+export const fetchCurrentBlockHeight = () => {
+    const url = `${config.apis.alchemyApiBaseUrl}/${config.alchemyApiKey}`
+
+    const data = JSON.stringify({
+        "jsonrpc": "2.0",
+        "method": "eth_blockNumber",
+        "params": [],
         "id": 0
     })
 

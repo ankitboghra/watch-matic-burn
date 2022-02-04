@@ -3,7 +3,12 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import { getPolygonContractData, getEthereumContractData, fetchPolygonBlockData } from '../utils'
+import {
+  getPolygonContractData,
+  getEthereumContractData,
+  fetchPolygonBlockData,
+  fetchCurrentBlockHeight,
+} from '../utils'
 
 export default new Vuex.Store({
   state: {
@@ -19,7 +24,11 @@ export default new Vuex.Store({
       Vue.set(state, 'polygonContractData', data)
     },
     SET_BLOCK_DATA(state, data) {
-      Vue.set(state, 'polygonBlockData', data)
+      if (!state.polygonBlockData)
+        Vue.set(state, 'polygonBlockData', [data])
+      else
+        Vue.set(state, 'polygonBlockData', [...state.polygonBlockData, data])
+
     },
   },
   actions: {
@@ -39,10 +48,18 @@ export default new Vuex.Store({
     },
     async getPolygonBlockData({ commit }) {
 
-      const response = await fetchPolygonBlockData();
-      const result = response.data.result;
+      const currentBlockHeightResponse = await fetchCurrentBlockHeight()
+      const currentBlockHeight = currentBlockHeightResponse.data.result
 
-      commit('SET_BLOCK_DATA', [result])
+      for (let i = 0; i < 5; i++) {
+        const blockNumber = currentBlockHeight - i
+        const hexBlockNumber = `0x${blockNumber.toString(16)}`
+        const response = await fetchPolygonBlockData(hexBlockNumber);
+        const result = response.data.result;
+
+        commit('SET_BLOCK_DATA', result)
+      }
+
     },
   },
   modules: {
