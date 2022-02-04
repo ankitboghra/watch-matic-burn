@@ -1,8 +1,8 @@
 <template>
-  <div class="home">
-    <h1>Polygon Burn Stats</h1>
-    <h5>From Alchemy</h5>
-    <BlockList :blockList="polygonBlockData" />
+  <div class="burn-transactions">
+    <h1>Polygon Burn Transactions</h1>
+    <h5>From Covalent</h5>
+    <Transactions :transactionsList="polygonBurnTxs" />
   </div>
 </template>
 
@@ -10,12 +10,12 @@
 // import Vue from "vue";
 import { mapState, mapGetters } from "vuex";
 
-import BlockList from "@/components/BlockList";
+import Transactions from "@/components/Transactions";
 
 export default {
-  name: "Home",
+  name: "BurnTransactions",
   components: {
-    BlockList,
+    Transactions,
   },
   data() {
     return {};
