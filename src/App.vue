@@ -2,7 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Statistics</router-link> |
-      <router-link to="/burn-txs">Transactions</router-link>
+      <router-link to="/burn-txs">Transactions</router-link> |
+      <router-link to="/burn-matic">Burn Matic</router-link> |
+      <router-link to="/claim-nft">Claim NFT</router-link>
     </div>
     <router-view/>
   </div>
